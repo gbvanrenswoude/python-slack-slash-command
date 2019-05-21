@@ -14,13 +14,17 @@ logger.setLevel(logging.INFO)
 
 
 def respond(err, res=None):
+    payload = {
+      'response_type': 'in_channel',
+      'text': res
+    }
     return {
         'statusCode': '400' if err else '200',
-        'body': err.message if err else json.dumps(res),
+        'body': err.message if err else json.dumps(payload),
         'headers': {
             'Content-Type': 'application/json',
         },
-    }
+}
 
 
 def lambda_handler(event, context):
@@ -38,4 +42,4 @@ def lambda_handler(event, context):
     else:
         command_text = ''
 
-    return respond(None, "%s invoked %s in %s and he burned the following line: :fire: :fire: :fire: :fire: %s :fire: :fire: :fire: :fire:" % (user, command, channel, command_text))
+    return respond(None, "%s invoked %s in %s and he burned the following: :fire: :fire: :fire: :fire: %s :fire: :fire: :fire: :fire: :dragon_face: " % (user, command, channel, command_text))
